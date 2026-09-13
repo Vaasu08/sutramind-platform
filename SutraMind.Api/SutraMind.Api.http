@@ -1,0 +1,6 @@
+@SutraMind.Api_HostAddress = http://localhost:5169
+
+GET {{SutraMind.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

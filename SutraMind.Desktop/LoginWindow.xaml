@@ -1,0 +1,40 @@
+<Window x:Class="SutraMind.Desktop.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="SutraMind - Login" Height="520" Width="860"
+        WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
+        Background="#F7F4EE">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.9*" />
+            <ColumnDefinition Width="1.1*" />
+        </Grid.ColumnDefinitions>
+        <Border Grid.Column="0" Background="#123D39" Padding="40">
+            <StackPanel VerticalAlignment="Center">
+                <TextBlock Text="SutraMind" FontSize="36" FontWeight="Bold" Foreground="White" />
+                <TextBlock Text="SMART CTMS FOR AYURVEDA" Margin="0,6,0,30" FontSize="10" FontWeight="Bold" Foreground="#F1C85B" />
+                <TextBlock Text="Evidence-led clinical research, available when the network is not." FontSize="20" FontWeight="SemiBold" Foreground="#E6F2ED" TextWrapping="Wrap" />
+                <TextBlock Text="Offline-first workspace for studies, participants, visits, CRFs, and query resolution." Margin="0,16,0,0" FontSize="13" Foreground="#B9D5CD" TextWrapping="Wrap" />
+                <Border Margin="0,32,0,0" Padding="14" Background="#1B514A" CornerRadius="6">
+                    <StackPanel>
+                        <TextBlock Text="DEMO WORKSPACE" FontSize="10" FontWeight="Bold" Foreground="#F1C85B" />
+                        <TextBlock Text="Synthetic data only" Margin="0,5,0,0" Foreground="#E6F2ED" />
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </Border>
+        <Grid Grid.Column="1" Margin="56,48">
+            <StackPanel VerticalAlignment="Center">
+                <TextBlock Text="Welcome back" FontSize="30" FontWeight="SemiBold" Foreground="#263A36" />
+                <TextBlock Text="Sign in to your clinical workspace" Margin="0,7,0,30" Foreground="#687873" />
+                <TextBlock Text="Email address" FontWeight="SemiBold" Foreground="#263A36" />
+                <TextBox x:Name="EmailTextBox" Margin="0,8,0,18" Height="38" Padding="10" FontSize="14" Text="coordinator@sutramind.local" />
+                <TextBlock Text="Password" FontWeight="SemiBold" Foreground="#263A36" />
+                <PasswordBox x:Name="PasswordBox" Margin="0,8,0,8" Height="38" Padding="10" FontSize="14" Password="Demo@123" />
+                <TextBlock x:Name="ErrorText" Margin="0,2,0,12" Foreground="#A44F3E" TextWrapping="Wrap" />
+                <Button Content="Log in" Click="Login_Click" Height="42" Background="#174A45" Foreground="White" BorderThickness="0" FontWeight="SemiBold" HorizontalContentAlignment="Center" />
+                <TextBlock Text="Demo accounts use password: Demo@123" Margin="0,18,0,0" FontSize="11" Foreground="#8A9690" />
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

@@ -1,0 +1,167 @@
+﻿<Window x:Class="SutraMind.Desktop.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModels="clr-namespace:SutraMind.Desktop.ViewModels"
+        mc:Ignorable="d"
+        Title="SutraMind Clinical Research Workspace" Height="820" Width="1360"
+        MinHeight="700" MinWidth="1100" Background="#F7F4EE">
+    <Window.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Segoe UI" />
+            <Setter Property="Foreground" Value="#263A36" />
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="FontFamily" Value="Segoe UI" />
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="Padding" Value="12,9" />
+            <Setter Property="Margin" Value="0,0,0,8" />
+            <Setter Property="HorizontalContentAlignment" Value="Left" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Foreground" Value="#DDEEE6" />
+        </Style>
+        <Style TargetType="ListBoxItem">
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="Margin" Value="0" />
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.DataContext>
+            <viewModels:MainWindowViewModel />
+        </Grid.DataContext>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="226" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.Column="0" Background="#123D39" Padding="18,24">
+            <DockPanel>
+                <StackPanel DockPanel.Dock="Bottom" Margin="0,20,0,0">
+                    <Border Background="#1B514A" Padding="12" CornerRadius="6">
+                        <StackPanel>
+                            <TextBlock Text="OFFLINE MODE" FontSize="11" FontWeight="Bold" Foreground="#F1C85B" />
+                            <TextBlock Text="{Binding PendingOperations}" Margin="0,5,0,0" FontSize="12" Foreground="#E7F3ED" />
+                            <Button Content="Sync when online" Command="{Binding SyncNowCommand}" Margin="0,12,0,0" Background="#F1C85B" Foreground="#173F3A" Padding="10,7" HorizontalContentAlignment="Center" />
+                        </StackPanel>
+                    </Border>
+                    <TextBlock Text="Signed in as" Margin="4,20,0,0" FontSize="11" Foreground="#9FC0B8" />
+                    <TextBlock Text="{Binding UserRole}" Margin="4,4,0,0" FontWeight="SemiBold" Foreground="White" />
+                    <TextBlock Text="AIIA New Delhi" Margin="4,2,0,0" FontSize="12" Foreground="#B9D5CD" />
+                    <TextBlock Text="{Binding AuthenticatedUser}" Margin="4,2,0,0" FontSize="11" Foreground="#B9D5CD" TextTrimming="CharacterEllipsis" />
+                    <Button Content="  Logout" Command="{Binding LogoutCommand}" Margin="0,18,0,0" Foreground="#F4D8D0" BorderBrush="#8C5B51" BorderThickness="1" HorizontalContentAlignment="Center" />
+                </StackPanel>
+                <StackPanel>
+                    <TextBlock Text="SutraMind" FontSize="25" FontWeight="Bold" Foreground="White" />
+                    <TextBlock Text="SMART CTMS FOR AYURVEDA" Margin="0,3,0,30" FontSize="9" FontWeight="Bold" Foreground="#F1C85B" />
+                    <TextBlock Text="CLINICAL WORKSPACE" Margin="4,0,0,10" FontSize="10" FontWeight="Bold" Foreground="#8CB4AA" />
+                    <Button Content="  Dashboard" Command="{Binding DashboardCommand}" Background="#22635B" FontWeight="SemiBold" />
+                    <Button Content="  Studies" Command="{Binding StudiesCommand}" />
+                    <Button Content="  Participants" Command="{Binding ParticipantsCommand}" />
+                    <Button Content="  Visits and CRF" Command="{Binding VisitsCommand}" />
+                    <Button Content="  Data Queries" Command="{Binding OpenQueriesCommand}" />
+                    <Button Content="  Ethics Review" Command="{Binding EthicsCommand}" />
+                    <Button Content="  Master Data" Command="{Binding MasterDataCommand}" />
+                </StackPanel>
+            </DockPanel>
+        </Border>
+
+        <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+            <StackPanel Margin="34,28,34,40">
+                <DockPanel Margin="0,0,0,22">
+                    <StackPanel>
+                        <TextBlock Text="{Binding CurrentSection}" FontSize="26" FontWeight="SemiBold" />
+                        <TextBlock Text="{Binding SectionDescription}" Margin="0,5,0,0" Foreground="#61726D" />
+                        <TextBlock Text="{Binding ActiveWorkflow, StringFormat=Current action: {0}}" Margin="0,10,0,0" FontSize="12" FontWeight="SemiBold" Foreground="#A45D2B" />
+                    </StackPanel>
+                    <StackPanel DockPanel.Dock="Right" HorizontalAlignment="Right">
+                        <TextBlock Text="{Binding LastSync}" HorizontalAlignment="Right" FontSize="11" Foreground="#6E7C78" />
+                        <TextBlock Text="{Binding SyncStatus}" Margin="0,5,0,0" HorizontalAlignment="Right" FontWeight="SemiBold" Foreground="#28704B" />
+                    </StackPanel>
+                </DockPanel>
+
+                <Border Padding="16" Background="White" BorderBrush="#E1DED7" BorderThickness="1" CornerRadius="6" Margin="0,0,0,20">
+                    <DockPanel>
+                        <TextBlock Text="ACTIVE STUDY" VerticalAlignment="Center" FontSize="11" FontWeight="Bold" Foreground="#6B7974" />
+                        <ComboBox DockPanel.Dock="Right" Width="350" ItemsSource="{Binding StudyOptions}" SelectedItem="{Binding SelectedStudy}" Padding="8,6" FontSize="13" />
+                    </DockPanel>
+                </Border>
+
+                <ItemsControl ItemsSource="{Binding Metrics}" Margin="0,0,0,24">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate><UniformGrid Columns="5" /></ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Margin="0,0,10,0" Padding="15" Background="White" BorderBrush="#E1DED7" BorderThickness="1" CornerRadius="6">
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Label}" FontSize="11" Foreground="#687873" TextWrapping="Wrap" />
+                                    <TextBlock Text="{Binding Value}" Margin="0,8,0,2" FontSize="22" FontWeight="Bold" Foreground="{Binding Accent}" />
+                                    <TextBlock Text="{Binding Detail}" FontSize="11" Foreground="#889590" TextWrapping="Wrap" />
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+                <Grid Margin="0,0,0,24">
+                    <Grid.ColumnDefinitions><ColumnDefinition Width="2*" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
+                    <Border Grid.Column="0" Padding="20" Background="White" BorderBrush="#E1DED7" BorderThickness="1" CornerRadius="6" Margin="0,0,14,0">
+                        <StackPanel>
+                            <DockPanel>
+                                <TextBlock Text="Visit milestone progression" FontSize="17" FontWeight="SemiBold" />
+                                <TextBlock Text="Current study cohort" DockPanel.Dock="Right" FontSize="11" Foreground="#87938F" VerticalAlignment="Center" />
+                            </DockPanel>
+                            <ItemsControl ItemsSource="{Binding VisitStages}" Margin="0,18,0,0">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Margin="0,0,0,14">
+                                            <Grid.ColumnDefinitions><ColumnDefinition Width="120" /><ColumnDefinition Width="*" /><ColumnDefinition Width="65" /></Grid.ColumnDefinitions>
+                                            <TextBlock Text="{Binding Stage}" FontSize="12" VerticalAlignment="Center" />
+                                            <ProgressBar Grid.Column="1" Height="10" Margin="12,0" Value="{Binding Completion}" Maximum="1" Foreground="#287C70" Background="#E6EEEA" />
+                                            <TextBlock Grid.Column="2" Text="{Binding Progress}" FontSize="11" Foreground="#687873" HorizontalAlignment="Right" VerticalAlignment="Center" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </Border>
+                    <Border Grid.Column="1" Padding="20" Background="#E9F1EE" BorderBrush="#D1E2DB" BorderThickness="1" CornerRadius="6">
+                        <StackPanel>
+                            <TextBlock Text="Next actions" FontSize="17" FontWeight="SemiBold" Foreground="#174A45" />
+                            <TextBlock Text="Keep today's field work moving." Margin="0,5,0,16" FontSize="12" Foreground="#55716A" />
+                            <Button Content="Enroll participant" Command="{Binding StartEnrollmentCommand}" Background="#174A45" HorizontalContentAlignment="Center" />
+                            <Button Content="Schedule a visit" Command="{Binding ScheduleVisitCommand}" Background="White" Foreground="#174A45" BorderBrush="#BCD2C8" BorderThickness="1" HorizontalContentAlignment="Center" />
+                            <Button Content="Review open query" Command="{Binding OpenQueriesCommand}" Background="White" Foreground="#174A45" BorderBrush="#BCD2C8" BorderThickness="1" HorizontalContentAlignment="Center" />
+                        </StackPanel>
+                    </Border>
+                </Grid>
+
+                <Border Padding="20" Background="White" BorderBrush="#E1DED7" BorderThickness="1" CornerRadius="6">
+                    <StackPanel>
+                        <DockPanel Margin="0,0,0,14">
+                            <StackPanel>
+                                <TextBlock Text="Structured participant cohort" FontSize="17" FontWeight="SemiBold" />
+                                <TextBlock Text="Ayurveda observations captured as structured research data" Margin="0,4,0,0" FontSize="12" Foreground="#7B8984" />
+                            </StackPanel>
+                            <TextBlock Text="5 of 68 participants" DockPanel.Dock="Right" VerticalAlignment="Center" FontSize="12" Foreground="#687873" />
+                        </DockPanel>
+                        <DataGrid ItemsSource="{Binding Participants}" AutoGenerateColumns="False" HeadersVisibility="Column" IsReadOnly="True" CanUserAddRows="False" GridLinesVisibility="Horizontal" BorderThickness="0" RowHeight="38" Background="White" Foreground="#263A36">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="SUBJECT" Binding="{Binding Code}" Width="90" />
+                                <DataGridTextColumn Header="AGE / SEX" Binding="{Binding Demographic}" Width="85" />
+                                <DataGridTextColumn Header="RANDOMIZATION" Binding="{Binding Randomization}" Width="110" />
+                                <DataGridTextColumn Header="PRAKRITI" Binding="{Binding Prakriti}" Width="*" />
+                                <DataGridTextColumn Header="AGNI" Binding="{Binding Agni}" Width="110" />
+                                <DataGridTextColumn Header="BALA" Binding="{Binding Bala}" Width="100" />
+                                <DataGridTextColumn Header="STATUS" Binding="{Binding Status}" Width="125" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Window>

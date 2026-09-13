@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "RYp1v1Mjkt48SR+pxs9wWwtWnAGKlvGim5kuXZpw4WU=",
+  "Source": "SutraMind.Api",
+  "BasePath": "_content/SutraMind.Api",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

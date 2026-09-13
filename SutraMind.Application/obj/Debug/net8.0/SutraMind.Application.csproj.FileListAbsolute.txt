@@ -1,0 +1,16 @@
+C:\Users\vaasu\Downloads\SutraMind-v2\sutramind-platform\SutraMind.Application\bin\Debug\net8.0\SutraMind.Application.deps.json
+C:\Users\vaasu\Downloads\SutraMind-v2\sutramind-platform\SutraMind.Application\bin\Debug\net8.0\SutraMind.Application.dll
+C:\Users\vaasu\Downloads\SutraMind-v2\sutramind-platform\SutraMind.Application\bin\Debug\net8.0\SutraMind.Application.pdb
+C:\Users\vaasu\Downloads\SutraMind-v2\sutramind-platform\SutraMind.Application\bin\Debug\net8.0\SutraMind.Domain.dll
+C:\Users\vaasu\Downloads\SutraMind-v2\sutramind-platform\SutraMind.Application\bin\Debug\net8.0\SutraMind.Domain.pdb
+C:\Users\vaasu\Downloads\SutraMind-v2\sutramind-platform\SutraMind.Application\obj\Debug\net8.0\SutraMind.Application.csproj.AssemblyReference.cache
+C:\Users\vaasu\Downloads\SutraMind-v2\sutramind-platform\SutraMind.Application\obj\Debug\net8.0\SutraMind.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\vaasu\Downloads\SutraMind-v2\sutramind-platform\SutraMind.Application\obj\Debug\net8.0\SutraMind.Application.AssemblyInfoInputs.cache
+C:\Users\vaasu\Downloads\SutraMind-v2\sutramind-platform\SutraMind.Application\obj\Debug\net8.0\SutraMind.Application.AssemblyInfo.cs
+C:\Users\vaasu\Downloads\SutraMind-v2\sutramind-platform\SutraMind.Application\obj\Debug\net8.0\SutraMind.Application.csproj.CoreCompileInputs.cache
+C:\Users\vaasu\Downloads\SutraMind-v2\sutramind-platform\SutraMind.Application\obj\Debug\net8.0\SutraMind.Application.sourcelink.json
+C:\Users\vaasu\Downloads\SutraMind-v2\sutramind-platform\SutraMind.Application\obj\Debug\net8.0\SutraMin.8DA06F53.Up2Date
+C:\Users\vaasu\Downloads\SutraMind-v2\sutramind-platform\SutraMind.Application\obj\Debug\net8.0\SutraMind.Application.dll
+C:\Users\vaasu\Downloads\SutraMind-v2\sutramind-platform\SutraMind.Application\obj\Debug\net8.0\refint\SutraMind.Application.dll
+C:\Users\vaasu\Downloads\SutraMind-v2\sutramind-platform\SutraMind.Application\obj\Debug\net8.0\SutraMind.Application.pdb
+C:\Users\vaasu\Downloads\SutraMind-v2\sutramind-platform\SutraMind.Application\obj\Debug\net8.0\ref\SutraMind.Application.dll
