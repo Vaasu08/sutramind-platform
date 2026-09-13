@@ -1,0 +1,69 @@
+<Window x:Class="SutraMind.Desktop.Windows.CreateStudyWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Create new study" Height="640" Width="540"
+        WindowStartupLocation="CenterOwner" ResizeMode="NoResize" Background="#F7F4EE">
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <TextBlock Text="New Clinical Study" FontSize="20" FontWeight="SemiBold" />
+        <ScrollViewer Grid.Row="1" Margin="0,16,0,16" VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <TextBlock Text="STUDY DETAILS" FontSize="11" FontWeight="Bold" Foreground="#8CB4AA" Margin="0,0,0,8" />
+                <TextBlock Text="Study code" Margin="0,0,0,4" />
+                <TextBox x:Name="StudyCodeBox" Padding="8,6" />
+                <TextBlock Text="Title" Margin="0,12,0,4" />
+                <TextBox x:Name="TitleBox" Padding="8,6" />
+                <TextBlock Text="Institution" Margin="0,12,0,4" />
+                <TextBox x:Name="InstitutionBox" Padding="8,6" />
+                <StackPanel Orientation="Horizontal" Margin="0,12,0,0">
+                    <StackPanel Width="120" Margin="0,0,12,0">
+                        <TextBlock Text="Sample size" Margin="0,0,0,4" />
+                        <TextBox x:Name="SampleSizeBox" Padding="8,6" />
+                    </StackPanel>
+                    <StackPanel Width="160" Margin="0,0,12,0">
+                        <TextBlock Text="Start date" Margin="0,0,0,4" />
+                        <TextBox x:Name="StartDateBox" Padding="8,6" />
+                    </StackPanel>
+                    <StackPanel Width="160">
+                        <TextBlock Text="End date" Margin="0,0,0,4" />
+                        <TextBox x:Name="EndDateBox" Padding="8,6" />
+                    </StackPanel>
+                </StackPanel>
+
+                <TextBlock Text="PROTOCOL" FontSize="11" FontWeight="Bold" Foreground="#8CB4AA" Margin="0,20,0,8" />
+                <TextBlock Text="Modern diagnosis" Margin="0,0,0,4" />
+                <TextBox x:Name="DiagnosisBox" Padding="8,6" />
+                <TextBlock Text="Vyadhi code" Margin="0,12,0,4" />
+                <TextBox x:Name="VyadhiCodeBox" Padding="8,6" />
+                <TextBlock Text="Intervention name" Margin="0,12,0,4" />
+                <TextBox x:Name="InterventionBox" Padding="8,6" />
+                <StackPanel Orientation="Horizontal" Margin="0,12,0,0">
+                    <StackPanel Width="160" Margin="0,0,12,0">
+                        <TextBlock Text="Dosage form code" Margin="0,0,0,4" />
+                        <TextBox x:Name="DosageFormBox" Padding="8,6" />
+                    </StackPanel>
+                    <StackPanel Width="160">
+                        <TextBlock Text="Anupana code" Margin="0,0,0,4" />
+                        <TextBox x:Name="AnupanaBox" Padding="8,6" />
+                    </StackPanel>
+                </StackPanel>
+                <TextBlock Text="Treatment duration (days)" Margin="0,12,0,4" />
+                <TextBox x:Name="DurationBox" Padding="8,6" Width="120" HorizontalAlignment="Left" />
+
+                <TextBlock Text="ETHICS" FontSize="11" FontWeight="Bold" Foreground="#8CB4AA" Margin="0,20,0,8" />
+                <TextBlock Text="IEC number" Margin="0,0,0,4" />
+                <TextBox x:Name="IecNumberBox" Padding="8,6" />
+
+                <TextBlock x:Name="ErrorText" Foreground="#A45D2B" Margin="0,12,0,0" TextWrapping="Wrap" />
+            </StackPanel>
+        </ScrollViewer>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="Cancel" Width="90" Margin="0,0,8,0" IsCancel="True" Style="{StaticResource SecondaryActionButtonStyle}" />
+            <Button Content="Create study" Width="130" IsDefault="True" Click="Create_Click" Style="{StaticResource PrimaryActionButtonStyle}" />
+        </StackPanel>
+    </Grid>
+</Window>

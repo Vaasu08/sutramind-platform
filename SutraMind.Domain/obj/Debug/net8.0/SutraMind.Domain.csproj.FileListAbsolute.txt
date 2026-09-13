@@ -22,3 +22,15 @@ C:\Users\divya\Downloads\sutramind-platform\SutraMind.Domain\obj\Debug\net8.0\Su
 C:\Users\divya\Downloads\sutramind-platform\SutraMind.Domain\obj\Debug\net8.0\refint\SutraMind.Domain.dll
 C:\Users\divya\Downloads\sutramind-platform\SutraMind.Domain\obj\Debug\net8.0\SutraMind.Domain.pdb
 C:\Users\divya\Downloads\sutramind-platform\SutraMind.Domain\obj\Debug\net8.0\ref\SutraMind.Domain.dll
+C:\Users\vaasu\Downloads\sutramind-platform\SutraMind.Domain\bin\Debug\net8.0\SutraMind.Domain.deps.json
+C:\Users\vaasu\Downloads\sutramind-platform\SutraMind.Domain\bin\Debug\net8.0\SutraMind.Domain.dll
+C:\Users\vaasu\Downloads\sutramind-platform\SutraMind.Domain\bin\Debug\net8.0\SutraMind.Domain.pdb
+C:\Users\vaasu\Downloads\sutramind-platform\SutraMind.Domain\obj\Debug\net8.0\SutraMind.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\vaasu\Downloads\sutramind-platform\SutraMind.Domain\obj\Debug\net8.0\SutraMind.Domain.AssemblyInfoInputs.cache
+C:\Users\vaasu\Downloads\sutramind-platform\SutraMind.Domain\obj\Debug\net8.0\SutraMind.Domain.AssemblyInfo.cs
+C:\Users\vaasu\Downloads\sutramind-platform\SutraMind.Domain\obj\Debug\net8.0\SutraMind.Domain.csproj.CoreCompileInputs.cache
+C:\Users\vaasu\Downloads\sutramind-platform\SutraMind.Domain\obj\Debug\net8.0\SutraMind.Domain.sourcelink.json
+C:\Users\vaasu\Downloads\sutramind-platform\SutraMind.Domain\obj\Debug\net8.0\SutraMind.Domain.dll
+C:\Users\vaasu\Downloads\sutramind-platform\SutraMind.Domain\obj\Debug\net8.0\refint\SutraMind.Domain.dll
+C:\Users\vaasu\Downloads\sutramind-platform\SutraMind.Domain\obj\Debug\net8.0\SutraMind.Domain.pdb
+C:\Users\vaasu\Downloads\sutramind-platform\SutraMind.Domain\obj\Debug\net8.0\ref\SutraMind.Domain.dll

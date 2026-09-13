@@ -15,6 +15,7 @@ public sealed class ParticipantsViewModel : SectionViewModelBase
     private readonly IParticipantReadService _participantReadService;
     private readonly IShellNavigation _navigation;
     private string searchText = string.Empty;
+    private ParticipantListItem? selectedParticipant;
 
     public ParticipantsViewModel(ClinicalSession session, IParticipantReadService participantReadService, IShellNavigation navigation)
     {
@@ -23,6 +24,7 @@ public sealed class ParticipantsViewModel : SectionViewModelBase
         _navigation = navigation;
         EnrollCommand = new PermissionCommand(() => session.Role, Permission.CreateParticipant, navigation.StartEnrollment);
         SearchCommand = new RelayCommand(async () => await LoadAsync());
+        ViewDetailCommand = new RelayCommand(() => OpenDetail(), () => SelectedParticipant is not null);
     }
 
     public override WorkspaceSection Section => WorkspaceSection.Participants;
@@ -35,8 +37,15 @@ public sealed class ParticipantsViewModel : SectionViewModelBase
         set => SetProperty(ref searchText, value);
     }
 
+    public ParticipantListItem? SelectedParticipant
+    {
+        get => selectedParticipant;
+        set => SetProperty(ref selectedParticipant, value);
+    }
+
     public ICommand EnrollCommand { get; }
     public ICommand SearchCommand { get; }
+    public ICommand ViewDetailCommand { get; }
 
     public string EnrollTooltip => PermissionPolicy.Allows(_session.Role, Permission.CreateParticipant)
         ? "Enroll a new participant in the active study."
@@ -48,5 +57,11 @@ public sealed class ParticipantsViewModel : SectionViewModelBase
         Participants.Clear();
         foreach (var row in rows)
             Participants.Add(row);
+    }
+
+    private void OpenDetail()
+    {
+        if (SelectedParticipant is null) return;
+        _navigation.StartParticipantDetail(SelectedParticipant.Code);
     }
 }

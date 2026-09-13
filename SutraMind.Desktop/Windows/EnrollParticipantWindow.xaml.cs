@@ -32,9 +32,11 @@ public partial class EnrollParticipantWindow : Window
         PrakritiCombo.ItemsSource = Filter(terms, "Prakriti");
         AgniCombo.ItemsSource = Filter(terms, "Agni");
         BalaCombo.ItemsSource = Filter(terms, "Bala");
+        SatvaCombo.ItemsSource = Filter(terms, "Satva");
         PrakritiCombo.SelectedIndex = 0;
         AgniCombo.SelectedIndex = 0;
         BalaCombo.SelectedIndex = 0;
+        if (SatvaCombo.Items.Count > 0) SatvaCombo.SelectedIndex = 0;
     }
 
     private static List<MasterTermListItem> Filter(IReadOnlyList<MasterTermListItem> terms, string category) =>
@@ -74,7 +76,7 @@ public partial class EnrollParticipantWindow : Window
                     null,
                     AgniCombo.SelectedValue?.ToString() ?? "A2",
                     BalaCombo.SelectedValue?.ToString() ?? "B2",
-                    "S2"),
+                    SatvaCombo.SelectedValue?.ToString() ?? "S2"),
                 _session.ActorUserId);
 
             await _participantService.EnrollAsync(request);

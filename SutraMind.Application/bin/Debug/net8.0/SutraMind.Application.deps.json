@@ -16,10 +16,7 @@
       },
       "SutraMind.Domain/1.0.0": {
         "runtime": {
-          "SutraMind.Domain.dll": {
-            "assemblyVersion": "1.0.0",
-            "fileVersion": "1.0.0.0"
-          }
+          "SutraMind.Domain.dll": {}
         }
       }
     }

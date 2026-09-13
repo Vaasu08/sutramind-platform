@@ -1,4 +1,4 @@
-﻿using System.Windows;
+using System.Windows;
 using Microsoft.Extensions.DependencyInjection;
 using SutraMind.Desktop.Services;
 using SutraMind.Desktop.ViewModels;
@@ -25,9 +25,21 @@ public partial class MainWindow : Window
         }
     }
 
+    private bool _isLoggingOut;
+
     private void HandleLogoutRequested(object? sender, EventArgs e)
     {
+        _isLoggingOut = true;
         var app = (App)System.Windows.Application.Current;
         app.ShowLogin(this);
+    }
+
+    protected override void OnClosed(EventArgs e)
+    {
+        base.OnClosed(e);
+        if (!_isLoggingOut)
+        {
+            System.Windows.Application.Current.Shutdown();
+        }
     }
 }

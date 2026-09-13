@@ -1,14 +1,17 @@
 <UserControl x:Class="SutraMind.Desktop.Views.EthicsReviewView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Border Style="{StaticResource ClinicalCardBorderStyle}" DataContext="{Binding Review}">
-        <StackPanel>
-            <TextBlock Text="Institutional Ethics Committee" FontSize="17" FontWeight="SemiBold" />
-            <TextBlock Text="{Binding IecNumber}" Margin="0,16,0,4" FontSize="15" FontWeight="SemiBold" />
-            <TextBlock Text="{Binding Decision, StringFormat=Decision: {0}}" FontSize="14" Foreground="#28704B" FontWeight="Bold" />
-            <TextBlock Text="{Binding ApprovalDate, StringFormat=Approval date: {0:d}}" Margin="0,12,0,0" />
-            <TextBlock Text="{Binding ExpiryDate, StringFormat=Expiry date: {0:d}}" Margin="0,4,0,0" />
-            <TextBlock Text="{Binding Remarks}" Margin="0,16,0,0" TextWrapping="Wrap" Foreground="#55716A" />
-        </StackPanel>
-    </Border>
+    <StackPanel>
+        <Button Content="Update ethics status" Command="{Binding UpdateStatusCommand}" Style="{StaticResource PrimaryActionButtonStyle}" Width="180" HorizontalAlignment="Left" Margin="0,0,0,16" />
+        <Border Style="{StaticResource ClinicalCardBorderStyle}" DataContext="{Binding Review}">
+            <StackPanel>
+                <TextBlock Text="Institutional Ethics Committee" FontSize="17" FontWeight="SemiBold" />
+                <TextBlock Text="{Binding IecNumber}" Margin="0,16,0,4" FontSize="15" FontWeight="SemiBold" />
+                <TextBlock Text="{Binding Decision, StringFormat=Decision: {0}}" FontSize="14" Foreground="#28704B" FontWeight="Bold" />
+                <TextBlock Text="{Binding ApprovalDate, StringFormat=Approval date: {0:d}}" Margin="0,12,0,0" />
+                <TextBlock Text="{Binding ExpiryDate, StringFormat=Expiry date: {0:d}}" Margin="0,4,0,0" />
+                <TextBlock Text="{Binding Remarks}" Margin="0,16,0,0" TextWrapping="Wrap" Foreground="#55716A" />
+            </StackPanel>
+        </Border>
+    </StackPanel>
 </UserControl>

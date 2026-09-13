@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\divya\Downloads\sutramind-platform\SutraMind.Desktop\obj\Debug\net8.0-windows\
+C:\Users\vaasu\Downloads\sutramind-platform\SutraMind.Desktop\obj\Debug\net8.0-windows\
 SutraMind.Desktop
 none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP
-C:\Users\divya\Downloads\sutramind-platform\SutraMind.Desktop\App.xaml
-121291073403
+C:\Users\vaasu\Downloads\sutramind-platform\SutraMind.Desktop\App.xaml
+19-1677099652
 
-33493595998
-2201581966364
-LoginWindow.xaml;MainWindow.xaml;Resources\ClinicalStyles.xaml;Views\DashboardView.xaml;Views\DataQueriesView.xaml;Views\EthicsReviewView.xaml;Views\MasterDataView.xaml;Views\ParticipantsView.xaml;Views\StudiesView.xaml;Views\VisitsCrfView.xaml;Windows\EnrollParticipantWindow.xaml;Windows\ScheduleVisitWindow.xaml;
+4086538790
+220-1663736181
+LoginWindow.xaml;MainWindow.xaml;Resources\ClinicalStyles.xaml;Views\DashboardView.xaml;Views\DataQueriesView.xaml;Views\EthicsReviewView.xaml;Views\MasterDataView.xaml;Views\ParticipantsView.xaml;Views\StudiesView.xaml;Views\VisitsCrfView.xaml;Windows\CompleteVisitWindow.xaml;Windows\CreateStudyWindow.xaml;Windows\EditMasterTermWindow.xaml;Windows\EnrollParticipantWindow.xaml;Windows\ParticipantDetailWindow.xaml;Windows\QueryActionWindow.xaml;Windows\RecordCrfWindow.xaml;Windows\ScheduleVisitWindow.xaml;Windows\UpdateEthicsWindow.xaml;
 
 False
 

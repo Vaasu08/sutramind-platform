@@ -1,14 +1,21 @@
 <UserControl x:Class="SutraMind.Desktop.Views.MasterDataView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Border Style="{StaticResource ClinicalCardBorderStyle}">
-        <DataGrid ItemsSource="{Binding Terms}" AutoGenerateColumns="False" HeadersVisibility="Column" IsReadOnly="True" CanUserAddRows="False" GridLinesVisibility="Horizontal" BorderThickness="0" RowHeight="38">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="CATEGORY" Binding="{Binding Category}" Width="120" />
-                <DataGridTextColumn Header="CODE" Binding="{Binding Code}" Width="80" />
-                <DataGridTextColumn Header="ENGLISH" Binding="{Binding LabelEn}" Width="*" />
-                <DataGridTextColumn Header="HINDI" Binding="{Binding LabelHi}" Width="160" />
-            </DataGrid.Columns>
-        </DataGrid>
-    </Border>
+    <StackPanel>
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,16">
+            <Button Content="Add term" Command="{Binding AddTermCommand}" Style="{StaticResource PrimaryActionButtonStyle}" Width="110" />
+            <Button Content="Edit selected" Command="{Binding EditTermCommand}" Style="{StaticResource SecondaryActionButtonStyle}" Width="120" Margin="8,0,0,0" />
+        </StackPanel>
+        <Border Style="{StaticResource ClinicalCardBorderStyle}">
+            <DataGrid ItemsSource="{Binding Terms}" SelectedItem="{Binding SelectedTerm}" AutoGenerateColumns="False" HeadersVisibility="Column" IsReadOnly="True" CanUserAddRows="False" GridLinesVisibility="Horizontal" BorderThickness="0" RowHeight="38">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="CATEGORY" Binding="{Binding Category}" Width="120" />
+                    <DataGridTextColumn Header="CODE" Binding="{Binding Code}" Width="80" />
+                    <DataGridTextColumn Header="ENGLISH" Binding="{Binding LabelEn}" Width="*" />
+                    <DataGridTextColumn Header="HINDI" Binding="{Binding LabelHi}" Width="140" />
+                    <DataGridTextColumn Header="MODERN MAPPING" Binding="{Binding ModernMappingEn}" Width="160" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
+    </StackPanel>
 </UserControl>

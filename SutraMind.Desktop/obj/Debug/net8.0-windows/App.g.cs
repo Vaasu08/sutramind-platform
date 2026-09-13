@@ -47,7 +47,7 @@ namespace SutraMind.Desktop {
         /// InitializeComponent
         /// </summary>
         [System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("PresentationBuildTasks", "8.0.31.0")]
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("PresentationBuildTasks", "8.0.22.0")]
         public void InitializeComponent() {
             if (_contentLoaded) {
                 return;
@@ -67,7 +67,7 @@ namespace SutraMind.Desktop {
         /// </summary>
         [System.STAThreadAttribute()]
         [System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("PresentationBuildTasks", "8.0.31.0")]
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("PresentationBuildTasks", "8.0.22.0")]
         public static void Main() {
             SutraMind.Desktop.App app = new SutraMind.Desktop.App();
             app.InitializeComponent();

@@ -33,6 +33,8 @@
             <ComboBox x:Name="AgniCombo" Padding="8,6" DisplayMemberPath="LabelEn" SelectedValuePath="Code" />
             <TextBlock Text="Bala" Margin="0,12,0,4" />
             <ComboBox x:Name="BalaCombo" Padding="8,6" DisplayMemberPath="LabelEn" SelectedValuePath="Code" />
+            <TextBlock Text="Satva" Margin="0,12,0,4" />
+            <ComboBox x:Name="SatvaCombo" Padding="8,6" DisplayMemberPath="LabelEn" SelectedValuePath="Code" />
             <TextBlock x:Name="ErrorText" Foreground="#A45D2B" Margin="0,12,0,0" TextWrapping="Wrap" />
         </StackPanel>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">

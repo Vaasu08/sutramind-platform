@@ -3,10 +3,12 @@ using System.Windows;
 using System.Windows.Input;
 using Microsoft.Extensions.DependencyInjection;
 using SutraMind.Application.Abstractions;
+using SutraMind.Application.ReadModels;
 using SutraMind.Desktop.Navigation;
 using SutraMind.Desktop.Services;
 using SutraMind.Desktop.Windows;
 using SutraMind.Domain.Enums;
+using SutraMind.Infrastructure.Persistence;
 
 namespace SutraMind.Desktop.ViewModels;
 
@@ -37,7 +39,8 @@ public sealed class MainWindowViewModel : ViewModelBase, IShellNavigation
         IVisitCrfReadService visitCrfReadService,
         IQueryReadService queryReadService,
         IEthicsReadService ethicsReadService,
-        IMasterDataReadService masterDataReadService)
+        IMasterDataReadService masterDataReadService,
+        LocalDbContext context)
     {
         _services = services;
         _session = session;
@@ -46,12 +49,12 @@ public sealed class MainWindowViewModel : ViewModelBase, IShellNavigation
         _sections = new Dictionary<WorkspaceSection, SectionViewModelBase>
         {
             [WorkspaceSection.Dashboard] = new DashboardViewModel(session, dashboardService, this),
-            [WorkspaceSection.Studies] = new StudiesViewModel(session, studyWorkspaceService),
+            [WorkspaceSection.Studies] = new StudiesViewModel(session, studyWorkspaceService, this),
             [WorkspaceSection.Participants] = new ParticipantsViewModel(session, participantReadService, this),
-            [WorkspaceSection.VisitsAndCrf] = new VisitsCrfViewModel(session, visitCrfReadService),
-            [WorkspaceSection.DataQueries] = new DataQueriesViewModel(session, queryReadService),
-            [WorkspaceSection.EthicsReview] = new EthicsReviewViewModel(session, ethicsReadService),
-            [WorkspaceSection.MasterData] = new MasterDataViewModel(masterDataReadService)
+            [WorkspaceSection.VisitsAndCrf] = new VisitsCrfViewModel(session, visitCrfReadService, this, context),
+            [WorkspaceSection.DataQueries] = new DataQueriesViewModel(session, queryReadService, this),
+            [WorkspaceSection.EthicsReview] = new EthicsReviewViewModel(session, ethicsReadService, this, context),
+            [WorkspaceSection.MasterData] = new MasterDataViewModel(masterDataReadService, this, session, context)
         };
 
         SyncNowCommand = new RelayCommand(async () => await SyncNowAsync());
@@ -172,6 +175,70 @@ public sealed class MainWindowViewModel : ViewModelBase, IShellNavigation
         if (_sections[WorkspaceSection.DataQueries] is DataQueriesViewModel queries)
             queries.OpenOnly = openOnly;
         NavigateTo(WorkspaceSection.DataQueries);
+    }
+
+    public void StartRecordCrf(Guid visitId, string visitLabel)
+    {
+        var window = _services.GetRequiredService<RecordCrfWindowFactory>().Create(visitId, visitLabel);
+        window.Owner = System.Windows.Application.Current.MainWindow;
+        if (window.ShowDialog() == true)
+            _ = RefreshShellAsync();
+    }
+
+    public void StartCompleteVisit(Guid visitId, string visitLabel)
+    {
+        var window = _services.GetRequiredService<CompleteVisitWindowFactory>().Create(visitId, visitLabel);
+        window.Owner = System.Windows.Application.Current.MainWindow;
+        if (window.ShowDialog() == true)
+            _ = RefreshShellAsync();
+    }
+
+    public void StartQueryAction(QueryActionMode mode, QueryListItem? item = null, Guid? entityId = null)
+    {
+        var window = _services.GetRequiredService<QueryActionWindowFactory>().Create(mode, item, entityId);
+        window.Owner = System.Windows.Application.Current.MainWindow;
+        if (window.ShowDialog() == true)
+            _ = RefreshShellAsync();
+    }
+
+    public void StartCreateStudy()
+    {
+        var window = _services.GetRequiredService<CreateStudyWindowFactory>().Create();
+        window.Owner = System.Windows.Application.Current.MainWindow;
+        if (window.ShowDialog() == true)
+            _ = RefreshShellAsync();
+    }
+
+    public void StartParticipantDetail(string participantCode)
+    {
+        var window = _services.GetRequiredService<ParticipantDetailWindowFactory>().Create(participantCode);
+        window.Owner = System.Windows.Application.Current.MainWindow;
+        if (window.ShowDialog() == true)
+            _ = RefreshShellAsync();
+    }
+
+    public void StartUpdateEthics(Guid ethicsId, string iecNumber, string currentStatus)
+    {
+        var window = _services.GetRequiredService<UpdateEthicsWindowFactory>().Create(ethicsId, iecNumber, currentStatus);
+        window.Owner = System.Windows.Application.Current.MainWindow;
+        if (window.ShowDialog() == true)
+            _ = RefreshShellAsync();
+    }
+
+    public void StartAddMasterTerm()
+    {
+        var window = _services.GetRequiredService<EditMasterTermWindowFactory>().CreateAdd();
+        window.Owner = System.Windows.Application.Current.MainWindow;
+        if (window.ShowDialog() == true)
+            _ = RefreshShellAsync();
+    }
+
+    public void StartEditMasterTerm(MasterTermListItem existing, Guid termId)
+    {
+        var window = _services.GetRequiredService<EditMasterTermWindowFactory>().CreateEdit(existing, termId);
+        window.Owner = System.Windows.Application.Current.MainWindow;
+        if (window.ShowDialog() == true)
+            _ = RefreshShellAsync();
     }
 
     public async Task SyncNowAsync()

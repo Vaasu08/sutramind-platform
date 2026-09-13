@@ -1,0 +1,39 @@
+<Window x:Class="SutraMind.Desktop.Windows.QueryActionWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Data Query" Height="420" Width="480"
+        WindowStartupLocation="CenterOwner" ResizeMode="NoResize" Background="#F7F4EE">
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <TextBlock x:Name="TitleText" Text="Raise a data query" FontSize="20" FontWeight="SemiBold" />
+        <StackPanel Grid.Row="1" Margin="0,20,0,20">
+            <!-- Raise mode fields -->
+            <StackPanel x:Name="RaisePanel">
+                <TextBlock Text="Participant" Margin="0,0,0,4" />
+                <ComboBox x:Name="ParticipantCombo" Padding="8,6" DisplayMemberPath="Code" />
+                <TextBlock Text="Field name" Margin="0,12,0,4" />
+                <TextBox x:Name="FieldNameBox" Padding="8,6" />
+            </StackPanel>
+            <!-- Read-only context for answer/close -->
+            <StackPanel x:Name="ContextPanel" Visibility="Collapsed">
+                <TextBlock Text="ORIGINAL QUERY" FontSize="11" FontWeight="Bold" Foreground="#8CB4AA" Margin="0,0,0,6" />
+                <TextBlock x:Name="OriginalSubject" FontWeight="SemiBold" />
+                <TextBlock x:Name="OriginalField" FontSize="12" Foreground="#687873" />
+                <TextBlock x:Name="OriginalMessage" Margin="0,8,0,0" TextWrapping="Wrap" />
+                <TextBlock x:Name="OriginalAnswer" Margin="0,8,0,0" TextWrapping="Wrap" Foreground="#276C65" />
+            </StackPanel>
+            <!-- Text input for all modes -->
+            <TextBlock x:Name="InputLabel" Text="Message" Margin="0,16,0,4" />
+            <TextBox x:Name="InputBox" Padding="8,6" Height="80" AcceptsReturn="True" TextWrapping="Wrap" />
+            <TextBlock x:Name="ErrorText" Foreground="#A45D2B" Margin="0,12,0,0" TextWrapping="Wrap" />
+        </StackPanel>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="Cancel" Width="90" Margin="0,0,8,0" IsCancel="True" Style="{StaticResource SecondaryActionButtonStyle}" />
+            <Button x:Name="SubmitButton" Content="Raise query" Width="130" IsDefault="True" Click="Submit_Click" Style="{StaticResource PrimaryActionButtonStyle}" />
+        </StackPanel>
+    </Grid>
+</Window>

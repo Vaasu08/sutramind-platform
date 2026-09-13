@@ -37,6 +37,8 @@ public static class DesktopBootstrap
             Email = "coordinator@sutramind.local",
             Role = UserRole.StudyCoordinator
         });
+
+        // Read services
         services.AddSingleton<IClinicalContextService, ClinicalContextService>();
         services.AddSingleton<IDashboardService, DashboardService>();
         services.AddSingleton<IStudyWorkspaceService, StudyWorkspaceService>();
@@ -47,16 +49,46 @@ public static class DesktopBootstrap
         services.AddSingleton<IMasterDataReadService, MasterDataReadService>();
         services.AddSingleton<IOutboxService, OutboxService>();
         services.AddSingleton<IVisitScheduleService, VisitScheduleService>();
+
+        // Write services
+        services.AddSingleton<ICrfService, CrfService>();
+        services.AddSingleton<IQueryWriteService, QueryWriteService>();
+        services.AddSingleton<IVisitWriteService, VisitWriteService>();
+        services.AddSingleton<IStudyWriteService, StudyWriteService>();
+        services.AddSingleton<IParticipantWriteService, ParticipantWriteService>();
+        services.AddSingleton<IEthicsWriteService, EthicsWriteService>();
+        services.AddSingleton<IMasterDataWriteService, MasterDataWriteService>();
+
+        // Repositories
         services.AddTransient<IParticipantRepository>(sp =>
         {
             var session = sp.GetRequiredService<ClinicalSession>();
             return new ParticipantRepository(sp.GetRequiredService<LocalDbContext>(), session.ActorUserId, session.DeviceId);
         });
         services.AddTransient<ParticipantService>();
+
+        // Windows
         services.AddTransient<EnrollParticipantWindow>();
         services.AddTransient<ScheduleVisitWindow>();
+        services.AddTransient<RecordCrfWindow>();
+        services.AddTransient<CompleteVisitWindow>();
+        services.AddTransient<QueryActionWindow>();
+        services.AddTransient<CreateStudyWindow>();
+        services.AddTransient<ParticipantDetailWindow>();
+        services.AddTransient<UpdateEthicsWindow>();
+        services.AddTransient<EditMasterTermWindow>();
+
+        // Window factories
         services.AddSingleton<EnrollParticipantWindowFactory>();
         services.AddSingleton<ScheduleVisitWindowFactory>();
+        services.AddSingleton<RecordCrfWindowFactory>();
+        services.AddSingleton<CompleteVisitWindowFactory>();
+        services.AddSingleton<QueryActionWindowFactory>();
+        services.AddSingleton<CreateStudyWindowFactory>();
+        services.AddSingleton<ParticipantDetailWindowFactory>();
+        services.AddSingleton<UpdateEthicsWindowFactory>();
+        services.AddSingleton<EditMasterTermWindowFactory>();
+
         services.AddTransient<MainWindowViewModel>();
 
         return services.BuildServiceProvider();
