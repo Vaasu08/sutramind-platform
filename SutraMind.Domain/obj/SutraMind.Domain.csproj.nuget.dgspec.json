@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\vaasu\\Downloads\\SutraMind-v2\\sutramind-platform\\SutraMind.Domain\\SutraMind.Domain.csproj": {}
+    "C:\\Users\\divya\\Downloads\\sutramind-platform\\SutraMind.Domain\\SutraMind.Domain.csproj": {}
   },
   "projects": {
-    "C:\\Users\\vaasu\\Downloads\\SutraMind-v2\\sutramind-platform\\SutraMind.Domain\\SutraMind.Domain.csproj": {
+    "C:\\Users\\divya\\Downloads\\sutramind-platform\\SutraMind.Domain\\SutraMind.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\vaasu\\Downloads\\SutraMind-v2\\sutramind-platform\\SutraMind.Domain\\SutraMind.Domain.csproj",
+        "projectUniqueName": "C:\\Users\\divya\\Downloads\\sutramind-platform\\SutraMind.Domain\\SutraMind.Domain.csproj",
         "projectName": "SutraMind.Domain",
-        "projectPath": "C:\\Users\\vaasu\\Downloads\\SutraMind-v2\\sutramind-platform\\SutraMind.Domain\\SutraMind.Domain.csproj",
-        "packagesPath": "C:\\Users\\vaasu\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\vaasu\\Downloads\\SutraMind-v2\\sutramind-platform\\SutraMind.Domain\\obj\\",
+        "projectPath": "C:\\Users\\divya\\Downloads\\sutramind-platform\\SutraMind.Domain\\SutraMind.Domain.csproj",
+        "packagesPath": "C:\\Users\\divya\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\divya\\Downloads\\sutramind-platform\\SutraMind.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\vaasu\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\divya\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -58,7 +58,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.319/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.425/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

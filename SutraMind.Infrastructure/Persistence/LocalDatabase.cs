@@ -10,12 +10,18 @@ public static class LocalDatabase
 
     public static LocalDbContext CreateContext(string databasePath, string encryptionKey)
     {
-        Batteries_V2.Init();
-        Interlocked.Exchange(ref initialized, 1);
-        var connection = new SqliteConnection($"Data Source={databasePath};Mode=ReadWriteCreate;Cache=Shared;Password={encryptionKey}");
-        connection.Open();
+        if (Interlocked.Exchange(ref initialized, 1) == 0)
+            Batteries_V2.Init();
+
+        var builder = new SqliteConnectionStringBuilder
+        {
+            DataSource = databasePath,
+            Mode = SqliteOpenMode.ReadWriteCreate,
+            Password = encryptionKey
+        };
+
         var options = new DbContextOptionsBuilder<LocalDbContext>()
-            .UseSqlite(connection)
+            .UseSqlite(builder.ConnectionString)
             .Options;
         return new LocalDbContext(options);
     }

@@ -1,126 +1,244 @@
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
+using System.Windows;
 using System.Windows.Input;
+using Microsoft.Extensions.DependencyInjection;
+using SutraMind.Application.Abstractions;
+using SutraMind.Desktop.Navigation;
+using SutraMind.Desktop.Services;
+using SutraMind.Desktop.Windows;
+using SutraMind.Domain.Enums;
 
 namespace SutraMind.Desktop.ViewModels;
 
-public sealed class MainWindowViewModel : INotifyPropertyChanged
+public sealed class MainWindowViewModel : ViewModelBase, IShellNavigation
 {
-    public string ProductName => "SutraMind";
-    public string EnvironmentName => "Clinical research workspace";
-    public string SyncStatus => "Offline - local data available";
-    public string LastSync => "Last sync: Today, 09:42";
-    public string PendingOperations => "3 pending operations";
-    public string AuthenticatedUser { get; private set; } = "coordinator@sutramind.local";
-    public string UserRole { get; private set; } = "Study Coordinator";
-    public string CurrentSection { get; private set; } = "Dashboard";
-    public string SectionDescription { get; private set; } = "Your research operations at a glance";
+    private readonly IServiceProvider _services;
+    private readonly ClinicalSession _session;
+    private readonly IOutboxService _outboxService;
+    private readonly Dictionary<WorkspaceSection, SectionViewModelBase> _sections;
+    private SectionViewModelBase? currentSectionViewModel;
+    private WorkspaceSection selectedSection = WorkspaceSection.Dashboard;
+    private string currentSection = "Dashboard";
+    private string sectionDescription = "Your research operations at a glance";
     private string activeWorkflow = "Participant enrollment and Ayurveda baseline";
+    private string pendingOperations = "Loading…";
+    private string lastSync = "Last sync: Not yet synced";
+    private string authenticatedUser = "coordinator@sutramind.local";
+    private string userRole = "Study Coordinator";
+    private string selectedStudy = string.Empty;
+
+    public MainWindowViewModel(
+        IServiceProvider services,
+        ClinicalSession session,
+        IOutboxService outboxService,
+        IDashboardService dashboardService,
+        IStudyWorkspaceService studyWorkspaceService,
+        IParticipantReadService participantReadService,
+        IVisitCrfReadService visitCrfReadService,
+        IQueryReadService queryReadService,
+        IEthicsReadService ethicsReadService,
+        IMasterDataReadService masterDataReadService)
+    {
+        _services = services;
+        _session = session;
+        _outboxService = outboxService;
+
+        _sections = new Dictionary<WorkspaceSection, SectionViewModelBase>
+        {
+            [WorkspaceSection.Dashboard] = new DashboardViewModel(session, dashboardService, this),
+            [WorkspaceSection.Studies] = new StudiesViewModel(session, studyWorkspaceService),
+            [WorkspaceSection.Participants] = new ParticipantsViewModel(session, participantReadService, this),
+            [WorkspaceSection.VisitsAndCrf] = new VisitsCrfViewModel(session, visitCrfReadService),
+            [WorkspaceSection.DataQueries] = new DataQueriesViewModel(session, queryReadService),
+            [WorkspaceSection.EthicsReview] = new EthicsReviewViewModel(session, ethicsReadService),
+            [WorkspaceSection.MasterData] = new MasterDataViewModel(masterDataReadService)
+        };
+
+        SyncNowCommand = new RelayCommand(async () => await SyncNowAsync());
+        LogoutCommand = new RelayCommand(() => LogoutRequested?.Invoke(this, EventArgs.Empty));
+
+        NavItems =
+        [
+            CreateNav(WorkspaceSection.Dashboard, "  Dashboard"),
+            CreateNav(WorkspaceSection.Studies, "  Studies"),
+            CreateNav(WorkspaceSection.Participants, "  Participants"),
+            CreateNav(WorkspaceSection.VisitsAndCrf, "  Visits and CRF"),
+            CreateNav(WorkspaceSection.DataQueries, "  Data Queries"),
+            CreateNav(WorkspaceSection.EthicsReview, "  Ethics Review"),
+            CreateNav(WorkspaceSection.MasterData, "  Master Data")
+        ];
+
+        StudyOptions = new ObservableCollection<string>();
+        _ = InitializeAsync();
+    }
+
+    public ObservableCollection<NavItemViewModel> NavItems { get; }
+    public ObservableCollection<string> StudyOptions { get; }
+
+    public SectionViewModelBase? CurrentSectionViewModel
+    {
+        get => currentSectionViewModel;
+        private set => SetProperty(ref currentSectionViewModel, value);
+    }
+
+    public WorkspaceSection SelectedSection
+    {
+        get => selectedSection;
+        private set => SetProperty(ref selectedSection, value);
+    }
+
+    public string SyncStatus => "Offline - local data available";
+    public string CurrentSection
+    {
+        get => currentSection;
+        private set => SetProperty(ref currentSection, value);
+    }
+
+    public string SectionDescription
+    {
+        get => sectionDescription;
+        private set => SetProperty(ref sectionDescription, value);
+    }
+
     public string ActiveWorkflow
     {
         get => activeWorkflow;
-        private set
-        {
-            if (activeWorkflow == value) return;
-            activeWorkflow = value;
-            OnPropertyChanged();
-        }
+        private set => SetProperty(ref activeWorkflow, value);
     }
-    public ObservableCollection<string> StudyOptions { get; } = [
-        "AMAVATA-001  |  Yogaraja Guggulu",
-        "PRATISHYAYA-001  |  Haridra Khanda"
-    ];
-    public string SelectedStudy { get; set; } = "AMAVATA-001  |  Yogaraja Guggulu";
-    public ObservableCollection<MetricCard> Metrics { get; } = [
-        new("68 / 120", "Recruitment progress", "56.7% of target", "#174A45"),
-        new("92.2%", "Visit completion", "142 of 154 visits", "#276C65"),
-        new("98.6%", "Medicine adherence", "Across active cohort", "#9A7615"),
-        new("APPROVED", "Ethics status", "AIIA-IEC-2026-001", "#28704B"),
-        new("1", "Open query", "14 closed this cycle", "#A45D2B")
-    ];
-    public ObservableCollection<VisitStage> VisitStages { get; } = [
-        new("Screening", "80 / 120", 0.67),
-        new("Baseline (V0)", "68 / 68", 1.0),
-        new("Visit 1 (D30)", "63 / 68", 0.93),
-        new("Visit 2 (D60)", "50 / 68", 0.74),
-        new("Visit 3 (D90)", "33 / 68", 0.49)
-    ];
-    public ObservableCollection<ParticipantRow> Participants { get; } = [
-        new("AMV-001", "42 / F", "R-001", "Vata-Kapha", "Tikshnagni", "Madhyama", "Visit 2 complete", "#28704B"),
-        new("AMV-002", "51 / M", "R-002", "Vata-Pitta", "Vishamagni", "Madhyama", "Visit 1 complete", "#28704B"),
-        new("AMV-003", "38 / F", "R-003", "Pitta-Kapha", "Samagni", "Pravara", "Visit 1 complete", "#28704B"),
-        new("AMV-004", "62 / M", "R-004", "Vata-Kapha", "Mandagni", "Avara", "Query pending", "#A45D2B"),
-        new("AMV-005", "47 / F", "R-005", "Tridoshaja", "Vishamagni", "Madhyama", "Baseline done", "#2B6F8A")
-    ];
-    public ICommand StartEnrollmentCommand { get; }
-    public ICommand OpenQueriesCommand { get; }
-    public ICommand ScheduleVisitCommand { get; }
+
+    public string PendingOperations
+    {
+        get => pendingOperations;
+        private set => SetProperty(ref pendingOperations, value);
+    }
+
+    public string LastSync
+    {
+        get => lastSync;
+        private set => SetProperty(ref lastSync, value);
+    }
+
+    public string AuthenticatedUser
+    {
+        get => authenticatedUser;
+        private set => SetProperty(ref authenticatedUser, value);
+    }
+
+    public string UserRole
+    {
+        get => userRole;
+        private set => SetProperty(ref userRole, value);
+    }
+
+    public string SelectedStudy
+    {
+        get => selectedStudy;
+        set => SetProperty(ref selectedStudy, value);
+    }
+
     public ICommand SyncNowCommand { get; }
-    public ICommand DashboardCommand { get; }
-    public ICommand StudiesCommand { get; }
-    public ICommand ParticipantsCommand { get; }
-    public ICommand VisitsCommand { get; }
-    public ICommand EthicsCommand { get; }
-    public ICommand MasterDataCommand { get; }
     public ICommand LogoutCommand { get; }
 
-    public event PropertyChangedEventHandler? PropertyChanged;
     public event EventHandler? LogoutRequested;
-
-    public MainWindowViewModel()
-    {
-        StartEnrollmentCommand = new DelegateCommand(() => ActiveWorkflow = "New participant enrollment ready");
-        OpenQueriesCommand = new DelegateCommand(() => ActiveWorkflow = "Query review queue selected");
-        ScheduleVisitCommand = new DelegateCommand(() => ActiveWorkflow = "Visit scheduling selected");
-        SyncNowCommand = new DelegateCommand(() => ActiveWorkflow = "Sync queued - waiting for network");
-        DashboardCommand = new DelegateCommand(() => SelectSection("Dashboard", "Your research operations at a glance"));
-        StudiesCommand = new DelegateCommand(() => SelectSection("Studies", "Review protocols, sites, ethics, and recruitment targets"));
-        ParticipantsCommand = new DelegateCommand(() => SelectSection("Participants", "Search and review the assigned participant registry"));
-        VisitsCommand = new DelegateCommand(() => SelectSection("Visits and CRF", "Track scheduled visits and complete structured case report forms"));
-        EthicsCommand = new DelegateCommand(() => SelectSection("Ethics Review", "Review IEC status, approval dates, and study remarks"));
-        MasterDataCommand = new DelegateCommand(() => SelectSection("Master Data", "Manage the controlled Ayurveda terminology used by forms"));
-        LogoutCommand = new DelegateCommand(() => LogoutRequested?.Invoke(this, EventArgs.Empty));
-    }
 
     public void SetAuthenticatedUser(string email)
     {
         AuthenticatedUser = email;
-        UserRole = email.StartsWith("admin", StringComparison.OrdinalIgnoreCase) ? "Administrator" :
-            email.StartsWith("pi@", StringComparison.OrdinalIgnoreCase) ? "Principal Investigator" :
-            email.StartsWith("monitor", StringComparison.OrdinalIgnoreCase) ? "Monitor" :
-            email.StartsWith("ethics", StringComparison.OrdinalIgnoreCase) ? "Ethics Committee" :
-            email.StartsWith("pv@", StringComparison.OrdinalIgnoreCase) ? "Pharmacovigilance" : "Study Coordinator";
-        OnPropertyChanged(nameof(AuthenticatedUser));
-        OnPropertyChanged(nameof(UserRole));
+        UserRole = ClinicalRoleMapper.ToDisplayName(ClinicalRoleMapper.FromEmail(email));
+        _ = RefreshShellAsync();
     }
 
-    private void SelectSection(string section, string description)
+    public void NavigateTo(WorkspaceSection section) => _ = NavigateAsync(section);
+
+    public void StartEnrollment()
     {
-        CurrentSection = section;
-        SectionDescription = description;
-        ActiveWorkflow = $"{section} workspace selected";
-        OnPropertyChanged(nameof(CurrentSection));
-        OnPropertyChanged(nameof(SectionDescription));
+        var window = _services.GetRequiredService<EnrollParticipantWindowFactory>().Create();
+        window.Owner = System.Windows.Application.Current.MainWindow;
+        if (window.ShowDialog() == true)
+            _ = RefreshShellAsync();
     }
 
-    private void OnPropertyChanged([CallerMemberName] string? propertyName = null) =>
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-
-    public sealed record MetricCard(string Value, string Label, string Detail, string Accent);
-    public sealed record VisitStage(string Stage, string Progress, double Completion);
-    public sealed record ParticipantRow(string Code, string Demographic, string Randomization, string Prakriti, string Agni, string Bala, string Status, string StatusColor);
-
-    private sealed class DelegateCommand(Action execute) : ICommand
+    public void StartScheduleVisit()
     {
-        public event EventHandler? CanExecuteChanged
+        NavigateTo(WorkspaceSection.VisitsAndCrf);
+        var window = _services.GetRequiredService<ScheduleVisitWindowFactory>().Create();
+        window.Owner = System.Windows.Application.Current.MainWindow;
+        if (window.ShowDialog() == true)
+            _ = RefreshShellAsync();
+    }
+
+    public void OpenQueries(bool openOnly)
+    {
+        if (_sections[WorkspaceSection.DataQueries] is DataQueriesViewModel queries)
+            queries.OpenOnly = openOnly;
+        NavigateTo(WorkspaceSection.DataQueries);
+    }
+
+    public async Task SyncNowAsync()
+    {
+        var pending = await _outboxService.CountPendingAsync();
+        PendingOperations = FormatPending(pending);
+        LastSync = $"Last sync preview: {DateTime.Now:HH:mm}";
+        ActiveWorkflow = pending == 0
+            ? "No pending operations — ready when online"
+            : $"Sync queued — {pending} operation(s) waiting for network";
+    }
+
+    public async Task RefreshShellAsync()
+    {
+        var studies = await _services.GetRequiredService<IStudyWorkspaceService>().ListStudiesAsync();
+        StudyOptions.Clear();
+        foreach (var study in studies)
+            StudyOptions.Add(study.Label);
+
+        if (StudyOptions.Count > 0 && string.IsNullOrWhiteSpace(SelectedStudy))
+            SelectedStudy = StudyOptions[0];
+
+        var pending = await _outboxService.CountPendingAsync();
+        PendingOperations = FormatPending(pending);
+        var lastAttempt = await _outboxService.GetLastSyncAttemptUtcAsync();
+        LastSync = lastAttempt is null
+            ? "Last sync: Not yet synced"
+            : $"Last sync: {lastAttempt.Value.LocalDateTime:g}";
+
+        await NavigateAsync(SelectedSection);
+    }
+
+    private NavItemViewModel CreateNav(WorkspaceSection section, string label) =>
+        new(section, label, new RelayCommand(() => NavigateTo(section)));
+
+    private async Task InitializeAsync() => await RefreshShellAsync();
+
+    private async Task NavigateAsync(WorkspaceSection section)
+    {
+        SelectedSection = section;
+        ApplySectionHeader(section);
+        foreach (var item in NavItems)
+            item.IsSelected = item.Section == section;
+
+        if (!_sections.TryGetValue(section, out var viewModel))
+            return;
+
+        CurrentSectionViewModel = viewModel;
+        await viewModel.LoadAsync();
+    }
+
+    private void ApplySectionHeader(WorkspaceSection section)
+    {
+        (CurrentSection, SectionDescription) = section switch
         {
-            add { }
-            remove { }
-        }
-
-        public bool CanExecute(object? parameter) => true;
-
-        public void Execute(object? parameter) => execute();
+            WorkspaceSection.Dashboard => ("Dashboard", "Your research operations at a glance"),
+            WorkspaceSection.Studies => ("Studies", "Review protocols, sites, ethics, and recruitment targets"),
+            WorkspaceSection.Participants => ("Participants", "Search and review the assigned participant registry"),
+            WorkspaceSection.VisitsAndCrf => ("Visits and CRF", "Track scheduled visits and complete structured case report forms"),
+            WorkspaceSection.DataQueries => ("Data Queries", "Review field-level discrepancies and resolutions"),
+            WorkspaceSection.EthicsReview => ("Ethics Review", "Review IEC status, approval dates, and study remarks"),
+            WorkspaceSection.MasterData => ("Master Data", "Manage controlled Ayurveda terminology used by forms"),
+            _ => ("Dashboard", "Your research operations at a glance")
+        };
+        ActiveWorkflow = $"{CurrentSection} workspace selected";
     }
+
+    private static string FormatPending(int count) =>
+        count == 1 ? "1 pending operation" : $"{count} pending operations";
 }

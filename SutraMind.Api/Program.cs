@@ -16,7 +16,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+var configuredUrls = builder.Configuration["ASPNETCORE_URLS"]
+    ?? Environment.GetEnvironmentVariable("ASPNETCORE_URLS");
+if (configuredUrls?.Contains("https://", StringComparison.OrdinalIgnoreCase) == true)
+    app.UseHttpsRedirection();
 
 app.UseAuthorization();
 

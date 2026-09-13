@@ -1,33 +1,28 @@
-﻿using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Windows;
+using Microsoft.Extensions.DependencyInjection;
+using SutraMind.Desktop.Services;
 using SutraMind.Desktop.ViewModels;
 
 namespace SutraMind.Desktop;
 
-/// <summary>
-/// Interaction logic for MainWindow.xaml
-/// </summary>
 public partial class MainWindow : Window
 {
-    public MainWindow()
+    public MainWindow(IServiceProvider services)
     {
         InitializeComponent();
+        DataContext = services.GetRequiredService<MainWindowViewModel>();
         if (DataContext is MainWindowViewModel viewModel)
             viewModel.LogoutRequested += HandleLogoutRequested;
     }
 
-    public void SetAuthenticatedUser(string email)
+    public async void SetAuthenticatedUser(string email)
     {
+        await DesktopBootstrap.UpdateSessionAsync(((App)System.Windows.Application.Current).Services, email);
         if (DataContext is MainWindowViewModel viewModel)
+        {
             viewModel.SetAuthenticatedUser(email);
+            await viewModel.RefreshShellAsync();
+        }
     }
 
     private void HandleLogoutRequested(object? sender, EventArgs e)

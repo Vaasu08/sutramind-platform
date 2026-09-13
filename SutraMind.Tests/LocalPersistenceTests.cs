@@ -27,10 +27,11 @@ public sealed class LocalPersistenceTests
                     Gender = "FEMALE",
                     ModernDiagnosis = "Rheumatoid Arthritis",
                     VyadhiCode = "V001",
-                    EnrollmentDate = DateOnly.FromDateTime(DateTime.UtcNow)
+                    EnrollmentDate = DateOnly.FromDateTime(DateTime.UtcNow),
+                    CreatedBy = Guid.NewGuid()
                 };
 
-                await repository.AddAsync(participant);
+                await repository.AddAsync(participant, null);
 
                 Assert.NotNull(await repository.GetAsync(participant.Id));
                 var outbox = Assert.Single(context.OutboxOperations);

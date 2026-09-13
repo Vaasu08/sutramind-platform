@@ -40,3 +40,5 @@ To validate the WPF project-system state after a clean/rebuild:
 This check confirms that the real desktop project exists and is registered in the solution, and that no generated `_wpftmp.csproj` file is left for VS Code to load.
 
 Development uses synthetic data only. AWS credentials and production secrets must remain outside the repository.
+
+For the encrypted local SQLite database, set `SUTRAMIND_DB_KEY` in your environment before launching the desktop client. If unset, a development-only default key is used.

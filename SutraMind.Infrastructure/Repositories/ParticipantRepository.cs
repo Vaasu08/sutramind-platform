@@ -9,10 +9,13 @@ namespace SutraMind.Infrastructure.Repositories;
 
 public sealed class ParticipantRepository(LocalDbContext context, Guid actorUserId, Guid deviceId) : IParticipantRepository
 {
-    public async Task AddAsync(Participant participant, CancellationToken cancellationToken = default)
+    public async Task AddAsync(Participant participant, AyurvedaBaseline? baseline, CancellationToken cancellationToken = default)
     {
         await using var transaction = await context.Database.BeginTransactionAsync(cancellationToken);
         context.Participants.Add(participant);
+        if (baseline is not null)
+            context.AyurvedaBaselines.Add(baseline);
+
         context.OutboxOperations.Add(new OutboxOperation
         {
             EntityType = nameof(Participant),

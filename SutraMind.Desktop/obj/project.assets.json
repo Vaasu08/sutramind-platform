@@ -1436,24 +1436,25 @@
   },
   "projectFileDependencyGroups": {
     "net8.0-windows7.0": [
+      "Microsoft.Extensions.DependencyInjection >= 8.0.0",
       "SutraMind.Application >= 1.0.0",
       "SutraMind.Infrastructure >= 1.0.0"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\vaasu\\.nuget\\packages\\": {}
+    "C:\\Users\\divya\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\vaasu\\Downloads\\SutraMind-v2\\sutramind-platform\\SutraMind.Desktop\\SutraMind.Desktop.csproj",
+      "projectUniqueName": "C:\\Users\\divya\\Downloads\\sutramind-platform\\SutraMind.Desktop\\SutraMind.Desktop.csproj",
       "projectName": "SutraMind.Desktop",
-      "projectPath": "C:\\Users\\vaasu\\Downloads\\SutraMind-v2\\sutramind-platform\\SutraMind.Desktop\\SutraMind.Desktop.csproj",
-      "packagesPath": "C:\\Users\\vaasu\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\vaasu\\Downloads\\SutraMind-v2\\sutramind-platform\\SutraMind.Desktop\\obj\\",
+      "projectPath": "C:\\Users\\divya\\Downloads\\sutramind-platform\\SutraMind.Desktop\\SutraMind.Desktop.csproj",
+      "packagesPath": "C:\\Users\\divya\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\divya\\Downloads\\sutramind-platform\\SutraMind.Desktop\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\vaasu\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\divya\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0-windows"
@@ -1465,11 +1466,11 @@
         "net8.0-windows7.0": {
           "targetAlias": "net8.0-windows",
           "projectReferences": {
-            "C:\\Users\\vaasu\\Downloads\\SutraMind-v2\\sutramind-platform\\SutraMind.Application\\SutraMind.Application.csproj": {
-              "projectPath": "C:\\Users\\vaasu\\Downloads\\SutraMind-v2\\sutramind-platform\\SutraMind.Application\\SutraMind.Application.csproj"
+            "C:\\Users\\divya\\Downloads\\sutramind-platform\\SutraMind.Application\\SutraMind.Application.csproj": {
+              "projectPath": "C:\\Users\\divya\\Downloads\\sutramind-platform\\SutraMind.Application\\SutraMind.Application.csproj"
             },
-            "C:\\Users\\vaasu\\Downloads\\SutraMind-v2\\sutramind-platform\\SutraMind.Infrastructure\\SutraMind.Infrastructure.csproj": {
-              "projectPath": "C:\\Users\\vaasu\\Downloads\\SutraMind-v2\\sutramind-platform\\SutraMind.Infrastructure\\SutraMind.Infrastructure.csproj"
+            "C:\\Users\\divya\\Downloads\\sutramind-platform\\SutraMind.Infrastructure\\SutraMind.Infrastructure.csproj": {
+              "projectPath": "C:\\Users\\divya\\Downloads\\sutramind-platform\\SutraMind.Infrastructure\\SutraMind.Infrastructure.csproj"
             }
           }
         }
@@ -1488,6 +1489,12 @@
     "frameworks": {
       "net8.0-windows7.0": {
         "targetAlias": "net8.0-windows",
+        "dependencies": {
+          "Microsoft.Extensions.DependencyInjection": {
+            "target": "Package",
+            "version": "[8.0.0, )"
+          }
+        },
         "imports": [
           "net461",
           "net462",
@@ -1507,7 +1514,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.319/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.425/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

@@ -827,12 +827,18 @@
           "SutraMind.Domain": "1.0.0"
         },
         "runtime": {
-          "SutraMind.Application.dll": {}
+          "SutraMind.Application.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       },
       "SutraMind.Domain/1.0.0": {
         "runtime": {
-          "SutraMind.Domain.dll": {}
+          "SutraMind.Domain.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       }
     }

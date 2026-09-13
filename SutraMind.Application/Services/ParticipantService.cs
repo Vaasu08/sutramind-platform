@@ -1,6 +1,7 @@
 using SutraMind.Application.Abstractions;
 using SutraMind.Application.Contracts;
 using SutraMind.Domain.Entities;
+using SutraMind.Domain.Enums;
 
 namespace SutraMind.Application.Services;
 
@@ -12,6 +13,7 @@ public sealed class ParticipantService(IParticipantRepository participants)
         Guid siteId,
         string modernDiagnosis,
         string vyadhiCode,
+        Guid createdBy,
         CancellationToken cancellationToken = default)
     {
         return await EnrollAsync(new EnrollParticipantRequest(
@@ -26,7 +28,8 @@ public sealed class ParticipantService(IParticipantRepository participants)
             null,
             null,
             DateOnly.FromDateTime(DateTime.UtcNow),
-            new AyurvedaBaselineInput("PENDING", null, "PENDING", "PENDING", "PENDING")), cancellationToken);
+            new AyurvedaBaselineInput("P6", null, "A2", "B2", "S2"),
+            createdBy), cancellationToken);
     }
 
     public async Task<Participant> EnrollAsync(
@@ -51,10 +54,23 @@ public sealed class ParticipantService(IParticipantRepository participants)
             VyadhiCode = request.VyadhiCode.Trim(),
             DiseaseDurationMonths = request.DiseaseDurationMonths,
             RandomizationId = request.RandomizationId,
-            EnrollmentDate = request.EnrollmentDate
+            EnrollmentDate = request.EnrollmentDate,
+            Status = ParticipantStatus.Enrolled,
+            CreatedBy = request.CreatedBy
         };
 
-        await participants.AddAsync(participant, cancellationToken);
+        var baseline = new AyurvedaBaseline
+        {
+            ParticipantId = participant.Id,
+            PrakritiCode = request.Baseline.PrakritiCode,
+            VikritiNotes = request.Baseline.VikritiNotes,
+            AgniCode = request.Baseline.AgniCode,
+            BalaCode = request.Baseline.BalaCode,
+            SatvaCode = request.Baseline.SatvaCode,
+            RecordedBy = request.CreatedBy
+        };
+
+        await participants.AddAsync(participant, baseline, cancellationToken);
         return participant;
     }
 }

@@ -11,13 +11,15 @@ public sealed class ParticipantServiceTests
     {
         var repository = new InMemoryParticipantRepository();
         var service = new ParticipantService(repository);
+        var createdBy = Guid.NewGuid();
 
         var participant = await service.EnrollAsync(
             " P-001 ",
             Guid.NewGuid(),
             Guid.NewGuid(),
             "Sandhivata",
-            "VYADHI_001");
+            "VYADHI_001",
+            createdBy);
 
         Assert.Equal("P-001", participant.ParticipantCode);
         Assert.Equal("VYADHI_001", participant.VyadhiCode);
@@ -29,7 +31,7 @@ public sealed class ParticipantServiceTests
     {
         private readonly Dictionary<Guid, Participant> store = [];
 
-        public Task AddAsync(Participant participant, CancellationToken cancellationToken = default)
+        public Task AddAsync(Participant participant, AyurvedaBaseline? baseline, CancellationToken cancellationToken = default)
         {
             store.Add(participant.Id, participant);
             return Task.CompletedTask;

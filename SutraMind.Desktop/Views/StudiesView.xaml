@@ -1,0 +1,48 @@
+<UserControl x:Class="SutraMind.Desktop.Views.StudiesView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <StackPanel>
+        <Grid Margin="0,0,0,20">
+            <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
+            <Border Grid.Column="0" Style="{StaticResource ClinicalCardBorderStyle}" Margin="0,0,10,0">
+                <StackPanel DataContext="{Binding Workspace}">
+                    <TextBlock Text="Trial Protocol &amp; Diagnosis" FontSize="17" FontWeight="SemiBold" />
+                    <TextBlock Text="{Binding ModernDiagnosis}" Margin="0,12,0,4" FontSize="15" FontWeight="SemiBold" />
+                    <TextBlock Text="{Binding MedDraNote}" FontSize="12" Foreground="#687873" />
+                    <TextBlock Margin="0,12,0,0" FontSize="12" Text="{Binding VyadhiCode, StringFormat=Vyadhi code: {0}}" />
+                </StackPanel>
+            </Border>
+            <Border Grid.Column="1" Style="{StaticResource ClinicalCardBorderStyle}" Margin="10,0,0,0">
+                <StackPanel DataContext="{Binding Workspace}">
+                    <TextBlock Text="IEC Ethics Clearance" FontSize="17" FontWeight="SemiBold" />
+                    <TextBlock Text="{Binding EthicsDecision, StringFormat=DECISION: {0}}" Margin="0,12,0,4" FontSize="15" FontWeight="Bold" Foreground="#28704B" />
+                    <TextBlock Text="{Binding IecNumber}" FontSize="12" Foreground="#687873" />
+                    <TextBlock Text="{Binding ApprovalDate, StringFormat=Approved: {0:d}}" Margin="0,8,0,0" FontSize="12" />
+                </StackPanel>
+            </Border>
+        </Grid>
+        <Grid>
+            <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
+            <Border Grid.Column="0" Style="{StaticResource ClinicalCardBorderStyle}" Margin="0,0,10,0">
+                <StackPanel DataContext="{Binding Workspace}">
+                    <TextBlock Text="Intervention &amp; Vehicle (Anupana)" FontSize="17" FontWeight="SemiBold" />
+                    <TextBlock Text="{Binding InterventionName}" Margin="0,12,0,4" FontSize="15" FontWeight="SemiBold" />
+                    <TextBlock Text="{Binding DosageFormCode, StringFormat=Form: {0}}" FontSize="12" />
+                    <TextBlock Text="{Binding AnupanaLabel, StringFormat=Anupana: {0}}" Margin="0,6,0,0" FontSize="12" Foreground="#55716A" />
+                </StackPanel>
+            </Border>
+            <Border Grid.Column="1" Style="{StaticResource ClinicalCardBorderStyle}" Margin="10,0,0,0">
+                <StackPanel DataContext="{Binding Workspace}">
+                    <TextBlock Text="Recruitment target" FontSize="17" FontWeight="SemiBold" />
+                    <TextBlock Margin="0,12,0,8" FontSize="22" FontWeight="Bold" Foreground="#174A45">
+                        <Run Text="{Binding EnrolledCount, Mode=OneWay}" />
+                        <Run Text=" / " />
+                        <Run Text="{Binding SampleSize, Mode=OneWay}" />
+                    </TextBlock>
+                    <TextBlock Text="{Binding Institution}" FontSize="12" Foreground="#687873" />
+                    <TextBlock Text="{Binding Title}" Margin="0,8,0,0" TextWrapping="Wrap" FontSize="12" />
+                </StackPanel>
+            </Border>
+        </Grid>
+    </StackPanel>
+</UserControl>
