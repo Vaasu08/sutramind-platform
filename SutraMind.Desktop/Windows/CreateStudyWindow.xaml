@@ -62,6 +62,7 @@
             </StackPanel>
         </ScrollViewer>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="Fill Dummy Data" Width="120" Margin="0,0,16,0" Click="FillDummyData_Click" Foreground="#276C65" Background="Transparent" BorderThickness="0" FontWeight="SemiBold" />
             <Button Content="Cancel" Width="90" Margin="0,0,8,0" IsCancel="True" Style="{StaticResource SecondaryActionButtonStyle}" />
             <Button Content="Create study" Width="130" IsDefault="True" Click="Create_Click" Style="{StaticResource PrimaryActionButtonStyle}" />
         </StackPanel>

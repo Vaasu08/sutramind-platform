@@ -78,6 +78,12 @@
                             <Setter TargetName="Root" Property="BorderBrush" Value="#F1C85B" />
                             <Setter TargetName="Root" Property="BorderThickness" Value="2" />
                         </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.6" />
+                        </Trigger>
+                        <DataTrigger Binding="{Binding Command.HasPermission, RelativeSource={RelativeSource Self}}" Value="False">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
@@ -107,6 +113,12 @@
                             <Setter TargetName="Root" Property="BorderBrush" Value="#F1C85B" />
                             <Setter TargetName="Root" Property="BorderThickness" Value="2" />
                         </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.6" />
+                        </Trigger>
+                        <DataTrigger Binding="{Binding Command.HasPermission, RelativeSource={RelativeSource Self}}" Value="False">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

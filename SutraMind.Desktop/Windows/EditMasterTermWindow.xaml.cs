@@ -82,4 +82,17 @@ public partial class EditMasterTermWindow : Window
             ErrorText.Text = exception.Message;
         }
     }
+
+    private void FillDummyData_Click(object sender, RoutedEventArgs e)
+    {
+        if (!_editTermId.HasValue)
+        {
+            CategoryBox.Text = "ANUPANA";
+            CodeBox.Text = "KSHEERA";
+        }
+        LabelEnBox.Text = "Milk";
+        LabelHiBox.Text = "दूध";
+        ModernMappingBox.Text = "Milk vehicle";
+        SortOrderBox.Text = "10";
+    }
 }

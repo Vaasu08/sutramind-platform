@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SutraMind.Application")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+36d7da133634e11a1f26c7c00d12bb174b911e93")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7a0d34b5f182589218c1740a13e5019eda32f9ae")]
 [assembly: System.Reflection.AssemblyProductAttribute("SutraMind.Application")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SutraMind.Application")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -88,4 +88,11 @@ public partial class ScheduleVisitWindow : Window
             ErrorText.Text = exception.Message;
         }
     }
+
+    private void FillDummyData_Click(object sender, RoutedEventArgs e)
+    {
+        if (ParticipantCombo.Items.Count > 0) ParticipantCombo.SelectedIndex = 0;
+        VisitNumberTextBox.Text = "1";
+        DateTextBox.Text = DateOnly.FromDateTime(DateTime.Today.AddDays(30)).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+    }
 }

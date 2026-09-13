@@ -2,7 +2,7 @@ namespace SutraMind.Application.ReadModels;
 
 public sealed record MetricCardData(string Value, string Label, string Detail, string Accent);
 public sealed record VisitStageData(string Stage, string Progress, double Completion);
-public sealed record ParticipantListItem(string Code, string Demographic, string Randomization, string Prakriti, string Agni, string Bala, string Status, string StatusColor);
+public sealed record ParticipantListItem(Guid Id, string Code, string Demographic, string Randomization, string Prakriti, string Agni, string Bala, string Status, string StatusColor);
 
 public sealed record DashboardViewData(
     IReadOnlyList<MetricCardData> Metrics,

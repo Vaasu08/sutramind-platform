@@ -52,4 +52,10 @@ public partial class CompleteVisitWindow : Window
             ErrorText.Text = exception.Message;
         }
     }
+
+    private void FillDummyData_Click(object sender, RoutedEventArgs e)
+    {
+        OutcomeCombo.SelectedIndex = 0; // Completed
+        DateTextBox.Text = DateOnly.FromDateTime(DateTime.Today).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+    }
 }

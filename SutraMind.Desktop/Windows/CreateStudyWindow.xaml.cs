@@ -80,4 +80,21 @@ public partial class CreateStudyWindow : Window
             ErrorText.Text = exception.Message;
         }
     }
+
+    private void FillDummyData_Click(object sender, RoutedEventArgs e)
+    {
+        StudyCodeBox.Text = "AMAVATA-002";
+        TitleBox.Text = "Efficacy of Yogaraja Guggulu in Amavata";
+        InstitutionBox.Text = "AIIA New Delhi";
+        SampleSizeBox.Text = "60";
+        StartDateBox.Text = DateOnly.FromDateTime(DateTime.Today).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+        EndDateBox.Text = DateOnly.FromDateTime(DateTime.Today.AddYears(1)).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+        DiagnosisBox.Text = "Rheumatoid Arthritis";
+        VyadhiCodeBox.Text = "AMV";
+        InterventionBox.Text = "Yogaraja Guggulu";
+        DosageFormBox.Text = "VATI";
+        AnupanaBox.Text = "USHNA_JALA";
+        DurationBox.Text = "90";
+        IecNumberBox.Text = "IEC/2026/104";
+    }
 }

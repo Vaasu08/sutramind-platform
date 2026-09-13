@@ -82,4 +82,12 @@ public partial class UpdateEthicsWindow : Window
             ErrorText.Text = exception.Message;
         }
     }
+
+    private void FillDummyData_Click(object sender, RoutedEventArgs e)
+    {
+        StatusCombo.SelectedIndex = 2; // Approved
+        ApprovalDateBox.Text = DateOnly.FromDateTime(DateTime.Today).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+        ExpiryDateBox.Text = DateOnly.FromDateTime(DateTime.Today.AddYears(1)).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+        RemarksBox.Text = "Approved with minor remarks.";
+    }
 }

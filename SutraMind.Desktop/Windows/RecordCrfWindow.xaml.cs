@@ -86,4 +86,21 @@ public partial class RecordCrfWindow : Window
 
     private static string? NullIfEmpty(string text) =>
         string.IsNullOrWhiteSpace(text) ? null : text.Trim();
+
+    private void FillDummyData_Click(object sender, RoutedEventArgs e)
+    {
+        SystolicBox.Text = "120";
+        DiastolicBox.Text = "80";
+        PulseBox.Text = "72";
+        WeightBox.Text = "70.5";
+        TempBox.Text = "37.0";
+        if (AgniCombo.Items.Count > 0) AgniCombo.SelectedIndex = 0;
+        if (BalaCombo.Items.Count > 0) BalaCombo.SelectedIndex = 0;
+        SymptomsBox.Text = "No adverse symptoms reported. Patient feels better.";
+        DoseBox.Text = "500 mg";
+        FrequencyBox.Text = "BD";
+        ComplianceBox.Text = "95%";
+        RemarksBox.Text = "Patient is responding well to treatment.";
+        StatusCombo.SelectedIndex = 1; // Completed
+    }
 }

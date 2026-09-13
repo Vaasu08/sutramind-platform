@@ -52,6 +52,8 @@ public sealed class PermissionCommand : ICommand
         ? "This action is unavailable right now."
         : $"Your role ({_getRole()}) cannot perform this action.";
 
+    public bool HasPermission => PermissionPolicy.Allows(_getRole(), _permission);
+
     public event EventHandler? CanExecuteChanged
     {
         add => CommandManager.RequerySuggested += value;

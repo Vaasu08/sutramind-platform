@@ -26,7 +26,13 @@ public sealed class CompleteVisitWindowFactory(IServiceProvider services)
 public sealed class QueryActionWindowFactory(IServiceProvider services)
 {
     public QueryActionWindow Create(QueryActionMode mode, Application.ReadModels.QueryListItem? item = null, Guid? entityId = null) =>
-        ActivatorUtilities.CreateInstance<QueryActionWindow>(services, mode, item!, entityId!);
+        new QueryActionWindow(
+            services.GetRequiredService<ClinicalSession>(),
+            services.GetRequiredService<SutraMind.Application.Abstractions.IQueryWriteService>(),
+            services.GetRequiredService<SutraMind.Application.Abstractions.IParticipantReadService>(),
+            mode,
+            item,
+            entityId);
 }
 
 public sealed class CreateStudyWindowFactory(IServiceProvider services)

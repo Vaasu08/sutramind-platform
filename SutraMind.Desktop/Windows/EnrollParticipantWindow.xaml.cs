@@ -87,4 +87,17 @@ public partial class EnrollParticipantWindow : Window
             ErrorText.Text = exception.Message;
         }
     }
+
+    private void FillDummyData_Click(object sender, RoutedEventArgs e)
+    {
+        CodeTextBox.Text = $"SUB-{Random.Shared.Next(100, 999)}";
+        NameTextBox.Text = "Rajesh Kumar";
+        AgeTextBox.Text = "45";
+        GenderTextBox.Text = "M";
+        RandomizationTextBox.Text = $"RND-{Random.Shared.Next(1000, 9999)}";
+        if (PrakritiCombo.Items.Count > 0) PrakritiCombo.SelectedIndex = 0;
+        if (AgniCombo.Items.Count > 0) AgniCombo.SelectedIndex = 0;
+        if (BalaCombo.Items.Count > 0) BalaCombo.SelectedIndex = 0;
+        if (SatvaCombo.Items.Count > 0) SatvaCombo.SelectedIndex = 0;
+    }
 }

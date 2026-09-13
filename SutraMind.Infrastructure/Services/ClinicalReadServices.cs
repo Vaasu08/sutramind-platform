@@ -102,6 +102,7 @@ public sealed class DashboardService(LocalDbContext context) : IDashboardService
                         : "Baseline done";
             var color = status.Contains("Query", StringComparison.OrdinalIgnoreCase) ? "#A45D2B" : "#28704B";
             return new ParticipantListItem(
+                participant.Id,
                 participant.ParticipantCode,
                 $"{participant.Age} / {participant.Gender}",
                 participant.RandomizationId ?? "—",

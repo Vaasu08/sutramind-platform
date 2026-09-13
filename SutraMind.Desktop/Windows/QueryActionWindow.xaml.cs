@@ -112,11 +112,10 @@ public partial class QueryActionWindow : Window
                         ErrorText.Text = "Select a participant.";
                         return;
                     }
-                    // We need the participant's Guid — look it up from the code via the context
                     var request = new RaiseQueryRequest(
                         _session.ActiveStudyId,
                         QueryTargetType.Participant,
-                        Guid.Empty, // Will be resolved by the service via subject code
+                        selected.Id,
                         string.IsNullOrWhiteSpace(FieldNameBox.Text) ? null : FieldNameBox.Text.Trim(),
                         text);
                     await _queryWriteService.RaiseAsync(request, _session.ActorUserId);
@@ -140,6 +139,24 @@ public partial class QueryActionWindow : Window
         catch (Exception exception)
         {
             ErrorText.Text = exception.Message;
+        }
+    }
+
+    private void FillDummyData_Click(object sender, RoutedEventArgs e)
+    {
+        if (_mode == QueryActionMode.Raise)
+        {
+            if (ParticipantCombo.Items.Count > 0) ParticipantCombo.SelectedIndex = 0;
+            FieldNameBox.Text = "Systolic BP";
+            InputBox.Text = "Value seems abnormally high. Please confirm.";
+        }
+        else if (_mode == QueryActionMode.Answer)
+        {
+            InputBox.Text = "Data entry error, correct value is 120.";
+        }
+        else if (_mode == QueryActionMode.Close)
+        {
+            InputBox.Text = "Resolved, corrected in source document.";
         }
     }
 }
